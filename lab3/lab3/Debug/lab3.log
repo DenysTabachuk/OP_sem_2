@@ -1,0 +1,6 @@
+﻿  ClassText.cpp
+  Text.cpp
+C:\Users\Денис\source\repos\lab3\lab3\Text.cpp(139,27): warning C4018: <: несоответствие типов со знаком и без знака
+  main.cpp
+  Создание кода...
+  lab3.vcxproj -> C:\Users\Денис\source\repos\lab3\Debug\lab3.exe
