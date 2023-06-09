@@ -1,4 +1,6 @@
+#pragma once
 #include <iostream>
+
 
 using namespace std;
 
@@ -33,6 +35,8 @@ public:
         Iterator operator--(int);
         bool operator==(const Iterator& other) const;
         bool operator!=(const Iterator& other) const;
+
+        T& get_value(int index);
     };
 
     DoublyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
@@ -50,7 +54,8 @@ public:
     Iterator begin() const { return Iterator(head); }
     Iterator end() const { return Iterator(nullptr); }
     
-
+    T& get_value(int index);
+    T& operator[](int index);
 };
 
 template <typename T>
@@ -195,6 +200,25 @@ bool DoublyLinkedList<T>::empty() {
 }
 
 
+template<typename T>
+T& DoublyLinkedList<T>::get_value(int index) {
+    if (index < 0 || index >= size) {
+        throw out_of_range("Index out of range");
+    }
+    Node* current = head;
+    for (int i = 0; i < index; i++) {
+        current = current->next;
+    }
+    return current->data;
+}
+
+
+template<typename T>
+T& DoublyLinkedList<T>::operator[](int index) {
+    return get_value(index);
+}
+
+
 template <typename T>
 T& DoublyLinkedList<T>::Iterator::operator*() const {
     return current->data;
@@ -256,7 +280,8 @@ void menu(DoublyLinkedList<T>& list) {
         cout << "6. Erase" << endl;
         cout << "7. Print" << endl;
         cout << "8. Clear" << endl;
-        cout << "9. Exit" << endl;
+        cout << "9. Get Value at Index" << endl; // New option added
+        cout << "10. Exit" << endl; // Updated option number
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -336,6 +361,15 @@ void menu(DoublyLinkedList<T>& list) {
             list.print();
             break;
         case 9:
+            cout << "Enter the index to get value: ";
+            cin >> index;
+            if (list.get_size() < index) {
+                cout << "Index out of range";
+                break;
+            }
+            cout << "Value at index " << index << ": " << list[index] << endl;
+            break;
+        case 10:
             cout << "Exiting..." << endl;
             return;
             break;
@@ -343,7 +377,8 @@ void menu(DoublyLinkedList<T>& list) {
             cout << "Invalid choice. Please try again." << endl;
         }
 
-        cout << "\n\n\n\n\n\n\n\n\n\n\n\n";
+        cout << "\n\n\n\n\n\n\n\n\n\n\n";
         cout << endl;
     }
 }
+
